@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, TextInput, Text, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
 import * as Device from 'expo-device';
 import axios from 'axios';
+import AnimatedEllipsis from 'react-native-animated-ellipsis';
 
 const TextInputComponent = () => {
   const [text, setText] = useState('');
-  const [ansText, setAnsText] = useState('Nope');
+  const [ansText, setAnsText] = useState('');
   const [waitFlag, setFlag] = useState(true);
   const [myRAM, changeRAM] = useState(0);
 
@@ -13,15 +14,14 @@ const TextInputComponent = () => {
     setText(inputText);
   };
 
-  const handleTextSubmit = async() => {
+  const handleTextSubmit = async () => {
     try {
-      console.log(myRAM, text)
-      url = "http://192.168.196.219:5000/query"
+      console.log(myRAM, text);
+      const url = "http://10.2.133.59:5000/query";
       const headers = {
-        'Content-Type': 'application/json', // Set the content type as needed
+        'Content-Type': 'application/json',
       };
-  
-      // Define your request body
+
       const requestBody = {
         "question": text,
         "RAM": myRAM
@@ -31,42 +31,47 @@ const TextInputComponent = () => {
 
       const response = await axios.post(url, requestBody, { headers });
 
-      // Handle the data from the response
       const posts = response.data;
       console.log('Fetched Answer:', posts);
-      setAnsText(posts)
+      setAnsText(posts);
+      setFlag(true);
     } catch (error) {
+      setFlag(true);
       console.error('API Error:', error);
     }
-  }
+  };
 
-  useEffect(()=>{
-    // Get RAM information
+  useEffect(() => {
     changeRAM(Device.totalMemory);
-  },[])
+  }, []);
 
-  useEffect(()=>{
-    setFlag(true);
-  },[ansText])
-
-  // console.log("Here");
+  // useEffect(() => {
+  //   setText("")
+  // },[ansText])1
 
   const { width } = Dimensions.get('window');
-  const inputWidth = 0.75 * width; 
+  const inputWidth = 0.75 * width;
 
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.title}>Input Text:</Text> */}
+      <Text style={styles.medminiText}>MEDMINI</Text>
       <TextInput
-        style={[styles.input, {width:inputWidth}]}
+        style={[styles.input, { width: inputWidth }]}
         onChangeText={handleTextChange}
-        onEndEditing={handleTextSubmit} // This event is triggered when "Enter" is pressed
+        onEndEditing={handleTextSubmit}
         value={text}
         editable={waitFlag}
         placeholder="Type something..."
-        returnKeyType="done" // This changes the return key on the keyboard to "Done"
+        returnKeyType="done"
       />
-      <Text style={styles.text}>Received Answer: {ansText}</Text>
+      {waitFlag ? (
+        <Text style={[styles.text, { width: inputWidth }]}> {ansText}</Text>
+      ) : (
+        <View style={styles.loaderContainer}>
+          {/* <ActivityIndicator size="large" color="#00FFFF" /> */}
+          <AnimatedEllipsis numberOfDots={4} animationDelay={100} style= {{ color: "#00FFFF", fontSize: 25 }} />
+        </View>
+      )}
     </View>
   );
 };
@@ -78,20 +83,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
   },
-  title: {
-    color: 'white',
-    marginBottom: 10,
-  },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: '#00FFFF',
     borderWidth: 1,
     color: 'white',
-    paddingLeft: 10, // Add left padding for better alignment
-    borderRadius:15
+    paddingLeft: 10,
+    borderRadius: 15,
+  },
+  medminiText: {
+    position: 'absolute',
+    top: 50,
+    right: 1,
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold'
   },
   text: {
+    paddingTop: 35,
     color: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center'
+  },
+  loaderContainer: {
+    paddingTop: 35,
+    alignItems: 'center',
   },
 });
 
