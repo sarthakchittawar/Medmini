@@ -30,7 +30,7 @@ def infer(prompt):
     )
 
 
-    vectordb=Chroma(persist_directory='./chroma_db_train',embedding_function=hf)
+    vectordb=Chroma(persist_directory='./med_db',embedding_function=hf)
     print(vectordb._collection.count())
 
     docs = vectordb.similarity_search(prompt,k=6)
