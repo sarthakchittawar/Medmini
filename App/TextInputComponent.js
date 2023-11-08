@@ -17,7 +17,8 @@ const TextInputComponent = () => {
   const handleTextSubmit = async () => {
     try {
       console.log(myRAM, text);
-      const url = "http://10.2.133.59:5000/query";
+      const url = "http://"+String(process.env.EXPO_PUBLIC_HOSTIP)+":5000/query";
+      console.log(url)
       const headers = {
         'Content-Type': 'application/json',
       };

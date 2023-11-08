@@ -1,10 +1,11 @@
 from flask import Flask, request;
 from flask_cors import CORS, cross_origin
-# from pegasus import pegasus;\
-from medmini import infer
+from medmini import infer,systemInit
 
 app = Flask(__name__)
 CORS(app)
+summarizer=None
+vectordb=None
 
 @app.route('/', methods=['GET', 'POST'])
 @cross_origin(supports_credentials=True)
@@ -18,7 +19,10 @@ def root():
 def x():
   # print(request.get_json(force=True)["question"])
     # return request.get_json(force=True)["text"]
-  return infer(request.get_json(force=True)["question"])
+  global summarizer
+  global vectordb
+  return infer(request.get_json(force=True)["question"],summarizer,vectordb)
 
 if __name__ == '__main__':
-  app.run(host='192.168.196.219', port=5000, debug=True)
+  summarizer,vectordb=systemInit()
+  app.run(host="0.0.0.0",port=5000,debug=True)

@@ -1,0 +1,8 @@
+transformers 
+langchain 
+Flask 
+flask-cors 
+chromadb 
+sentence-transformers 
+sentencepiece
+torch --index-url https://download.pytorch.org/whl/cpu
