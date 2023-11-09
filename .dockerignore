@@ -1,3 +1,7 @@
 medmini.pdf
-README.md 
 media/
+run.sh
+install.sh
+docker-run.sh
+.gitignore
+.git/

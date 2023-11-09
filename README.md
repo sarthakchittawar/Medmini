@@ -9,18 +9,22 @@
 ![Pipeline](./media/diagram.png)
 
 
+## **Installation Instructions**
+
+### **Quickstart - Docker** _Memory Heavy_
+- `sudo chmod +x docker-run.sh`
+- `sudo ./docker-run.sh`
+
+    **Uninstalling**
+    - `sudo docker image rm medmini`
 
 
-## **Instructions for Setup**
+### **Raw Install** _Best Performance_
+- `sudo chmod +x install.sh ; ./install.sh`
+- `sudo chmod +x run.sh ; ./run.sh`
+- _Need to have a ubuntu>=22.04 or debian>=12 based distro_
 
-1. `cd mashqa_data`
-2. `python format.py`
-3. `cd ..; python dbGen.py`
 
-## **Instructions to run**
-1. `cd App; npx expo start`
-2. `python backend.py`
 
 ## **Future work**
-1. Dockerisation of the project to allow it to run from any IP address without having to do many changes.
-2. Improve the RAG algorithm without compromising on efficiency
+1. Improve the RAG algorithm without compromising on efficiency
