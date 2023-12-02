@@ -12,6 +12,7 @@
 ## **Installation Instructions**
 
 ### **Quickstart - Docker** _Memory Heavy_
+- Download the `docker.run.sh` file from the repository
 - `sudo chmod +x docker-run.sh`
 - `sudo ./docker-run.sh`
 
@@ -20,6 +21,7 @@
 
 
 ### **Raw Install** _Best Performance_
+- `git clone https://github.com/sarthakchittawar/Medmini.git`
 - `sudo chmod +x install.sh ; ./install.sh`
 - `sudo chmod +x run.sh ; ./run.sh`
 - _Need to have a ubuntu>=22.04 or debian>=12 based distro_
