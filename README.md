@@ -12,7 +12,7 @@
 ## **Installation Instructions**
 
 ### **Quickstart - Docker** _Memory Heavy_
-- Download the `docker.run.sh` file from the repository
+- Download the `docker-run.sh` file from the repository
 - `sudo chmod +x docker-run.sh`
 - `sudo ./docker-run.sh`
 
